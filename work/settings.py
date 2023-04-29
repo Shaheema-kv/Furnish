@@ -154,10 +154,10 @@ if DEBUG == True:
     ]
     STATIC_URL = 'static/'
 else:
-    STATICFILES_DIRS = [
-        BASE_DIR / "static",
-    ]
-    STATIC_URL = 'static/'
+    # STATICFILES_DIRS = [
+    #     BASE_DIR / "static",
+    # ]
+    # STATIC_URL = 'static/'
     STATIC_ROOT = 'static'
      
 if DEBUG == True:
