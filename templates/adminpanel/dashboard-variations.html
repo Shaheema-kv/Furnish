@@ -1,0 +1,56 @@
+{% extends 'adminpanel/dashboard-base.html'%} 
+ {% block content %}
+            {% load static %}
+            <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+                <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+                  <!-- Title-->
+                  <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
+                    <h2 class="h3 py-2 me-2 text-center text-sm-start">Variation Management</h2>
+                    <div class="py-2" >
+                        <div style="padding:1rem; margin-left:4rem;"><a href="{% url 'add_variation' %}"> <button  class="btn bg-info btn-icon me-2" type="button" data-bs-toggle="tooltip"  title="Add New"><i class="text-light">Add Variations</i></button></a></div>
+                  </div> 
+            <main class="col-md-9">
+                <div class="wrap-table-shopping-cart">
+                <table class="table table-gray-light">
+                  <thead>
+                    <tr class="mb-4">
+                      <th scope="col">ID</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Value</th>
+                      <th scope="col">Active</th>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for variation in variations %}
+                    <tr>
+                      <th scope="row">{{ variation.id }}</th>
+                      <td>{{ variation.product | capfirst}}</td>
+                      <td>{{ variation.variation_category }}</td>
+                      <td>{{ variation.variation_value }}</td>
+                      <td>
+                        {% if variation.is_active %}
+                        <i class="fas fa-check-circle" style="color: #28a745"></i>
+                        {% else %}
+                        <i class="fas fa-times-circle" style="color: #c21010"></i>
+                        {% endif %}
+                      </td>
+                      <td><a href="{% url 'update_variation' variation.id %}" class="btn btn-sm btn-info">Edit</a></td>
+                      <td><a href="{% url 'delete_variation' variation.id %}" onclick="return confirm('Are you sure you want to delete this variant of the product {{variation.product }}?')" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </main>
+        </section>
+    </div>
+  </div>
+</div>
+</main> 
+            
+
+            {% endblock content%}
+            

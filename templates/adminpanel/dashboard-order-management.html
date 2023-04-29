@@ -1,0 +1,153 @@
+{% extends 'adminpanel/dashboard-base.html'%}
+{% block title %} Order Management {% endblock title %}
+{% block content %}
+{% load static %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+{% comment %} <section class="section-content padding-y bg">
+    <div class="container mt-5 mb-5">
+      <h1 class="text-center h2 mb-4">Manage Orders</h1>
+      <div class="row">
+       <main class="col-md-9"> {% endcomment %}
+
+        <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+          <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+            <!-- Title-->
+            <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
+              <h2 class="h3 py-2 me-2 text-center text-sm-start">Manage Orders</h2>
+             
+            </div> 
+
+          {% comment %} <div class= " d-flex justify-content-end">
+          <form action="" class="search" method="POST" >
+            {% csrf_token %}
+            <div class="mb-3">
+              <div class="input-group  ">
+                <input type="text" id="form1" class="form-control" placeholder = "search" name = "key" />
+                
+              <button class="btn btn-gray-light" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            </div>
+          </form>
+        </div> {% endcomment %}
+        <div class="wrap-table-shopping-cart">
+          <table class="table table-gray-light">
+            <thead>
+              <tr>
+                <th scope="col">Order Number</th>
+                {% comment %} <th scope="col">User</th> {% endcomment %}
+                <th scope="col">Billing Name</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+                <!-- <th scope="col"></th> -->
+                <!-- <th scope="col"></th> -->
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+              <tr>
+                <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{ order.order_number }}</a></th>
+                {% comment %} <td>{{ order.user }}</td> {% endcomment %}
+                <td>{{ order.full_name }}</td>
+                <td>{{ order.order_total }}</td>
+                <td>
+                  {% if order.status == 'Cancelled' %}
+                  <span class="text-danger font-weight-bold">{{ order.status }}</span>
+                  {% elif order.status == 'Delivered' %}
+                  <span class="text-success font-weight-bold">{{ order.status }}</span>
+                  {% elif order.status == 'Processing' %}
+                  <span class="text-muted font-weight-bold">{{ order.status }}</span>
+                  {% else %} <span class="text-info font-weight-bold">{{ order.status }}</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if order.status == 'Accepted' %}
+                  <a href="{% url 'accept_order' order.order_number %}" onclick="return confirm('Are you sure you want to update the status to Shipped ?')"  class="btn btn-sm btn-warning">Shipped</a>
+                  {% elif order.status == 'Shipped' %}
+                  <a href="{% url 'complete_order' order.order_number %}" onclick="return confirm('Are you sure you want to update the status to Delivered ?')" class="btn btn-sm btn-success">Complete</a>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if order.status == 'Accepted' or order.status == 'Shipped' %}
+                  <a href="{% url 'manager_cancel_order' order.order_number %}" onclick="return confirm('Are you sure you want to cancel the order ?')" class="btn btn-sm btn-danger">Cancel</a>
+                  
+                  {% endif %}
+                </td>
+              </tr>
+ {% endfor %}
+             
+
+
+
+              {% comment %} {% for order in orders %}
+              <tr>
+                <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{ order.order_number }}</a></th>
+                <td>{{ order.user }}</td>
+                <td>{{ order.full_name }}</td>
+                <td>{{ order.order_total }}</td>
+
+                <td>
+                  {% if order.status == 'Cancelled' %}
+                  <span class="text-danger font-weight-bold">{{ order.status }}</span>
+                  {% elif order.status == 'Delivered' %}
+                  <span class="text-success font-weight-bold">{{ order.status }}</span>
+                  {% elif order.status == 'Processing' %}
+                  <span class="text-muted font-weight-bold">{{ order.status }}</span>
+                  {% else %} <span class="text-info font-weight-bold">{{ order.status }}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if order.status == 'Accepted' %}
+                  <a href="{% url 'accept_order' order.order_number %}" class="btn btn-sm btn-light">Shipped</a>
+                  {% elif order.status == 'Shipped' %}
+                  <a href="{% url 'complete_order' order.order_number %}" class="btn btn-sm btn-light">Complete</a>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if order.status == 'Accepted' or order.status == 'Shipped' %}
+                  <a href="{% url 'manager_cancel_order' order.order_number %}" class="btn btn-sm btn-light">Cancel</a>
+                  
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %} {% endcomment %}
+            </tbody>
+          </table>
+          {% comment %} <div class="container">
+            <div class="row">
+              <aside class="col-md-3"></aside>
+              <main class="col-md-9">
+                <nav class="mt-4" aria-label="Page navigation sample">
+                  {% if orders.has_other_pages %}
+                  <ul class="pagination">
+                    {% if orders.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ orders.previous_page_number }}">Previous</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                    {% endif %} {% for page_number in orders.paginator.page_range %} {% if orders.number == page_number %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ page_number }}</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+                    {% endif %} {% endfor %} {% if orders.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ orders.next_page_number }}">Next</a></li>
+                    {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    {% endif %}
+                  </ul>
+                  {% endif %}
+                </nav>
+              </main>
+            </div>
+          </div> {% endcomment %}
+        </div>
+          <!-- order-group.// -->
+        {% comment %} </main> {% endcomment %}
+      <!-- row.// -->
+    </div>
+  </section>
+  
+  <!-- ========================= SECTION CONTENT END// ========================= -->
+  {% endblock content %}

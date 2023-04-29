@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Furnish| Furniture Store</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="{% static 'login/css/nunito-font.css'%}">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="{% static 'login/css/style.css'%}"/>
+</head>
+<body class="form-v6">
+	<div class="page-content">
+		<div class="form-v6-content">
+			<div class="form-left">
+				<img src="{% static 'login/images/form.jpg'%}" alt="form">
+			</div>
+			{% if otp %}
+			<div>
+				{% for message in messages %}
+					
+						<p class="text-info my-5">{{message}}</p>
+					
+				{% endfor %}
+				</div>
+			<form class="form-detail" action="#" method="post">
+				{% csrf_token %}
+				<h2>Verify OTP</h2>
+				
+				<div class="form-row">
+				
+				</div>
+				<div class="form-row">
+					<input type="text" name="otp" id="full-name" class="input-text" placeholder="enter your OTP " required><br>
+                </div>
+				<div class="form-row-last">
+					<input type="hidden" name="usr" id="full-name" class="input-text" value="{{usr.username}}" required><br>
+                </div>
+				<a href="{% url 'signup' %}"><input type="submit" name="register" class="register" value="Verify"></a>
+				{% else %}
+				<div>
+					{% comment %} {% for message in messages %}
+					
+						<p class="text-info my-5">{{message}}</p>
+					
+					{% endfor %} {% endcomment %}
+					</div>
+				<form class="form-detail" action="#" method="post">
+					{% csrf_token %}
+					<h2>Register Form</h2>
+					
+				
+				<div class="form-row">
+					<input type="email" name="username" id="your-email" class="input-text" placeholder="email@gmail.com" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+				</div>
+				{% comment %} <div class="form-row">
+					<input type="text" name="username" id="full-name" class="input-text" placeholder="username" required>
+				</div> {% endcomment %}
+				<div class="form-row">
+					<input type="text" name="firstname" id="full-name" class="input-text" placeholder="first name" required>
+				</div>
+                <div class="form-row">
+					<input type="text" name="lastname" id="full-name" class="input-text" placeholder="last Name" required>
+				</div>
+				
+				<div class="form-row">
+					<input type="password" name="password1" id="password" class="input-text" placeholder="Password" required>
+				</div>
+				<div class="form-row">
+					<input type="password" name="password2" id="comfirm-password" class="input-text" placeholder="Comfirm Password" required>
+				</div>
+				<div class="form-row-last">
+					
+					<a href="{% url 'signup' %}"><input type="submit" name="register" class="register" value="Register"></a>
+					<div class="navbar-tool-text ms-n3"><a href="{% url 'signin' %}"  ><small> Already have an Account??</small> Login</div></a></a>
+					{% endif %}
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

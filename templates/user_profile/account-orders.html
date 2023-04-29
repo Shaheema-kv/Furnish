@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %} Orders {% endblock title %}
+{% load static %}
+{% block content %}
+
+
+
+       <!-- Page Title-->
+       <div class="page-title-overlap bg-dark pt-4">
+        <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+          <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+            <nav aria-label="breadcrumb">
+              {% comment %} <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>Home</a></li>
+                <li class="breadcrumb-item text-nowrap"><a href="#">Account</a>
+                </li>
+                <li class="breadcrumb-item text-nowrap active" aria-current="page">Orders history</li>
+              </ol> {% endcomment %}
+            </nav>
+          </div>
+          <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+            <h1 class="h3 text-light mb-0">My order history</h1>
+          </div>
+        </div>
+      </div>
+      <div class="container pb-5 mb-2 mb-md-4">
+        <div class="row">
+            <!-- Sidebar-->
+             
+            {% include 'user_profile/account-sidebar.html' %}
+            <!-- Content  -->
+          <section class="col-lg-8">
+            <!-- Toolbar-->
+            <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
+              <div class="d-flex align-items-center">
+                {% comment %}<label class="d-none d-lg-block fs-sm text-light text-nowrap opacity-75 me-2" for="order-sort">Sort orders:</label>
+                 <label class="d-lg-none fs-sm text-nowrap opacity-75 me-2" for="order-sort">Sort orders:</label>
+                <select class="form-select" id="order-sort">
+                  <option>All</option>
+                  <option>Delivered</option>
+                  <option>In Progress</option>comm
+                  <option>Delayed</option>
+                  <option>Canceled</option>
+                </select> {% endcomment %}
+              </div><a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="{% url 'signout'  %}"><i class="ci-sign-out me-2"></i>Sign out</a>
+            </div>
+            <!-- Orders list-->
+            {% if orders %}
+            <div class="table-responsive fs-md mb-4">
+              <table class="table table-hover mb-0">
+				
+				  <thead>
+				    <tr>
+				      <th scope="col">Order #</th>
+				      <th scope="col">Billing Name</th>
+				      <th scope="col">Phone</th>
+				      <th scope="col">Order Total</th>
+					  <th scope="col">Date</th>
+					  <th scope="col">Status</th>
+					  <th scope="col"></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+						{% for order in orders %}
+				    <tr>
+						
+				      <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{order.order_number}}</a></th>
+					  <td>{{order.full_name}}</td>
+				      <td>{{order.phone}}</td>
+				      <td>₹.<br> {{order.order_total}}</td>
+					  <td>{{order.created_at}}</td>
+            {% if order.status == 'Accepted'%}
+					  <td><div class="text-info">{{order.status}}</div></td>
+            {% elif order.status == 'Shipped'%}
+            <td><div class="text-warning">{{order.status}}</div></td>
+            {% elif order.status == 'Delivered'%}
+            <td><div class="text-success">{{order.status}}</div></td>
+            {% elif order.status == 'Cancelled'%}
+            <td><div class="text-danger">{{order.status}}</div></td>
+            {% endif %}
+
+            
+					  <td>
+            {% if order.status != 'Cancelled' and order.status != 'Delivered' %}
+            <a href="{% url 'cancel_order_user' order.order_number %}" onclick="return confirm('Are you sure you want to cancel the order ?')" class="btn btn-danger">Cancel</a>
+            {% endif %}
+
+
+            {% comment %} {% if order.status == 'Cancelled' %}
+            <button style="width:6rem;" class="btn btn-info disabled">Cancelled</button>
+						{% elif order.status != 'Delivered'%}
+						<a href="{% url 'cancel_order_user' order.order_number %}" onclick="return confirm('Are you sure you want to cancel the order ?')" class="btn btn-danger">Cancel</a>
+					  {% endif %}  {% endcomment %}
+					  </td>
+
+				    </tr>
+				{% endfor %}
+
+				  </tbody>
+				</table>
+			</div>
+
+            {% else %}
+            <p class="text-secondary-faded"> You haven't ordered anything !!<p> <br><h6 class="text-primary" style="margin-left:10rem;">Go to our store and purchase for your dream home..<h6> 
+             <a href="{% url 'store' %}"> <button  class="btn  bg-primary text-light" style="margin-left:20rem;">Shop now</button></a>
+              {% endif %}
+            </section>
+        </div>
+      </div> 
+    </main> 
+    {% endblock %}

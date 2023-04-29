@@ -1,0 +1,123 @@
+{% extends 'adminpanel/dashboard-base.html'%}
+
+            {% block content %}
+            {% load static %}
+            <!-- Content-->
+            <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+              <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+                <!-- Title-->
+                <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
+                  <h2 class="h3 py-2 me-2 text-center text-sm-start">Edit {{product.product_name}}</h2>
+                 
+                </div>
+
+                <form action="{% url 'edit_product' product.id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row ">
+                      <div class="form-group col-md-6 ">
+                        <label class="form-label" for="unp-product-description">Product Name</label>
+                        {% comment %} <label for="id_product_name ">Product Name</label> {% endcomment %}
+                        {{ form.product_name }}
+                      </div>
+                        <br>
+                      
+                        <div class="form-group col-md-6 ">
+                            <label class="form-label" for="unp-product-description">Product slug</label>
+                          {% comment %} <label for="id_product_name ">product slug</label> {% endcomment %}
+                          {{ form.slug }}
+                        </div>
+                        <br>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="unp-product-description">Price</label>
+                        {% comment %} <label for="product_price">Product Price</label> {% endcomment %}
+                        {{ form.price }}
+                      </div>
+                      <br>
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="unp-product-description">Image</label>
+                        {% comment %} <label for="product_image">Product Image</label> {% endcomment %}
+                        {{ form.images }}
+                      </div>
+                      <br>
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="unp-product-description">Stock</label>
+                        {% comment %} <label for="product_stock">Product Stock</label> {% endcomment %}
+                        {{ form.stock }}
+                      </div>
+                      <br>
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="unp-product-description">Category</label>
+                        {% comment %} <label for="product_category">Category</label> {% endcomment %}
+                        {{ form.category }}
+                      </div>
+                      <br>
+                      <div class="form-group col-md-6">
+                        <label class="form-label" for="unp-product-description">Available</label>
+                        {% comment %} <label for="id_is_available">Available</label> {% endcomment %}
+                        {{ form.is_available }}
+                      </div>
+                      <br>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="form-label" for="unp-product-description">Description</label>
+                      {% comment %} <label for="product_description">Product Description</label> {% endcomment %}
+                      {{ form.description }}
+                    </div>
+                    <br>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                  </form>
+
+
+                 {% comment %} <form action="{% url 'add_product' %}" method="post" enctype="multipart/form-data">
+                  <div class="mb-3 pb-2">
+                    <label class="form-label" for="unp-product-name">Product name</label>
+                    
+                    <input name="product_name" class="form-control" type="text" id="unp-product-name">
+                    
+                  </div>
+                  <div class="py-2 mb-3">
+                    <label class="form-label" for="unp-product-name">Category</label>
+                    <select name="category_name" class="form-select me-2"  id="unp-category">
+                     
+                      <option>Photos</option>
+                     
+                    </select>
+                  </div>
+                  <div class="file-drop-area mb-3">
+                    <div class="file-drop-icon ci-cloud-upload"></div><span class="file-drop-message">Drag and drop here to upload product screenshot</span>
+                    <input name="image" class="file-drop-input" type="file">
+                    <button class="file-drop-btn btn btn-primary btn-sm mb-2" type="button">Or select file</button>
+                    <div class="form-text">1000 x 800px ideal size for hi-res displays</div>
+                  </div>
+                  <div class="mb-3 py-2">
+                    <label class="form-label" for="unp-product-description">Product description</label>
+                    <textarea name="description" class="form-control" rows="6" id="unp-product-description"></textarea>
+                   
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6 mb-3">
+                      <label class="form-label" for="unp-standard-price">Price</label>
+                      <div class="input-group"><span class="input-group-text"><i class="ci-rupee"></i></span>
+                        <input name="price" class="form-control" type="text" id="unp-standard-price">
+                      </div>
+                     
+                    </div>
+                    
+                  </div>
+                  
+                  <button class="btn btn-primary d-block w-100" type="submit"><i class="ci-cloud-upload fs-lg me-2"></i>Upload Product</button>
+                </form> {% endcomment %}
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    {% endblock content%}
+    <!-- Footer-->
+    
