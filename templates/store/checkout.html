@@ -255,6 +255,7 @@
         <form action="{% url 'checkout' %}" method="POST">
                         {% csrf_token %}
           <div class=" d-flex justify-content-left" >
+            {% if address %}
             {% for i in address  %}
             <div class="card  mb-4 mr-4 " style="width:20rem;">
                 <input type="radio" name="adress" value="{{i.first_name}}-{{i.last_name}}-{{ i.address }}-{{ i.city }}-{{ i.state }}-{{ i.postal_code }}-{{ i.country }}-{{ i.email }}-{{i.phone}}">
@@ -274,6 +275,7 @@
                 </div>
             </div>
             {% endfor %}
+            {% endif %}
             {% comment %} {% for i in address  %}
             <div class="card  mb-4 mr-4 " style="width:20rem;">
                 <input type="radio" name="adress" value="{{i.name}}-{{ i.address }}-{{ i.city }}-{{ i.state }}-{{ i.postal_code }}-{{ i.country }}-{{i.phone}}">

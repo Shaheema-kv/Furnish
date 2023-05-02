@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class UserOTP(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     time_st = models.DateTimeField(auto_now= True)
-    otp = models.SmallIntegerField()
+    otp = models.IntegerField()
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
