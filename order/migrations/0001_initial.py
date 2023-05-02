@@ -93,6 +93,7 @@ class Migration(migrations.Migration):
                 ('country', models.CharField(max_length=100)),
                 ('postal_code', models.CharField(max_length=100)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                
             ],
         ),
     ]
