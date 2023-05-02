@@ -231,7 +231,7 @@ def checkout(request,   total=0, quantity=0, cart_items=None):
         pass
            
    
-
+    
     address=Address.objects.filter(user=request.user)
     first_name=""
     last_name=""
